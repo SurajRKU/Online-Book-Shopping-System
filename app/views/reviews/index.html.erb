@@ -1,0 +1,30 @@
+<% if @reviews.any? %>
+    <h1>Your Reviews</h1>
+<% @reviews.each do |review| %>
+  <div class="review">
+    <h2><%= review.book.name %></h2>
+    <p>Rating: <%= review.rating %></p>
+    <p>Comment: <%= review.review %></p>
+
+    <% if review.user == current_user %>
+      <%= button_to 'Edit Review', edit_review_path(review), method: :get, class: 'btn btn-warning', style: 'margin: 15px;'  %>
+      <%= button_to 'Delete Review', review_path(review), method: :delete, class: 'btn btn-danger' %>
+    <% end %>
+  </div>
+<% end %>
+<% else %>
+  <p> You do not have any reviews to edit</p>
+<% end %>
+<h2>Books You Can Review</h2>
+
+<% @purchased_books.each do |book| %>
+  <div class="book">
+    <h3><%= book.name %></h3>
+    <% if current_user.reviews.where(book_id: book.id).exists? %>
+      <p>You have already reviewed this book.</p>
+    <% else %>
+      <%= button_to 'Create Review', new_book_review_path(book), method: :get, class: 'btn btn-primary', style: 'margin: 15px;' %>
+    <% end %>
+  </div>
+<% end %>
+<%= link_to "Back", root_path, class: "btn btn-link" %>

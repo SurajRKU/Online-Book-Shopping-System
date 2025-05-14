@@ -1,0 +1,17 @@
+
+
+
+<% if @reviews.any? %>
+  <h2>Reviews Written by <%= @user.name %></h2>
+  <% @reviews.each do |review| %>
+    <div class="reviews-item">
+      <p>Book Name: <%= review.book.name %></p>
+      <p>Rating given: <%= review.rating %></p>
+      <p>Comment given: <%= review.review %></p>
+      <hr style="border-top: 3px solid black; margin: 20px 0;">
+    </div>
+  <% end %>
+<% else %>
+  <p>This user has not given reviews for any books yet.</p>
+<% end %>
+<%= link_to "Back", root_path, class: "btn btn-link" %>

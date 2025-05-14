@@ -1,0 +1,32 @@
+<h1>Checkout</h1>
+
+<%= form_with url: transactions_path, method: :post do |form| %>
+  <p>Total Price: <%= number_to_currency(@total_price) %></p>
+
+  <p>User Information:</p>
+  <p>Name: <%= current_user.name %></p>
+  <p>Email: <%= current_user.email %></p>
+  
+  <!-- Prefilled fields for credit card and address -->
+
+  <div class="form-group">
+    <%= form.label :phone_number, "Phone No:" %>
+    <%= form.text_field :phone_number, value: current_user.phone_number, class: "form-control", required: true %>
+  </div>
+  </p>
+  <div class="form-group">
+    <%= form.label :credit_card_number, "Credit Card Number:" %>
+    <%= form.text_field :credit_card_number, value: current_user.credit_card_number, class: "form-control", required: true %>
+  </div>
+  </p>
+  <div class="form-group">
+    <%= form.label :address, "Address:" %>
+    <%= form.text_area :address, value: current_user.address, class: "form-control", rows: 3, required: true %>
+  </div>
+  </p>
+  <%= form.submit "Authorize Payment", class: "btn btn-success" %>
+<% end %>
+
+<%#<p>Find me in app/views/cart/checkout.html.erb</p>%>
+</p>
+<%= link_to "Back", request.referer || root_path, class: "btn btn-link" %>

@@ -1,0 +1,30 @@
+<h1>Books</h1>
+<%= link_to "Back", root_path, class: "btn btn-link" %>
+<% if current_user.admin? %>
+  <%= button_to 'New Book', new_book_path, method: :get, class: 'btn btn-success' %>
+<% end %>
+
+<% @books.each do |book| %>
+  <div>
+    <p><strong>Book ID:</strong> <%= book.id %></p>
+    <p><strong>Isbn:</strong> <%= book.isbn %></p>
+    <p><strong>Name:</strong> <%= book.name %></p>
+    <p><strong>Author:</strong> <%= book.author %></p>
+    <p><strong>Publisher:</strong> <%= book.publisher %></p>
+    <p><strong>Price:</strong> <%= book.price %></p>
+    <p><strong>Stock:</strong> <%= book.stock %></p>
+
+    <% if current_user.admin? %>
+      <%= button_to 'Edit', edit_book_path(book), method: :get, class: 'btn btn-primary' %>
+      <%= button_to 'Delete', book_path(book), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    <% end %>
+
+  </div>
+
+  <!-- Add separator -->
+  <hr style="border-top: 3px solid #ccc; margin: 20px 0;">
+<% end %>
+
+
+
+<p></p>

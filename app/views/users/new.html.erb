@@ -1,0 +1,89 @@
+<h1>New user</h1>
+
+
+<%= form_with(model: @user, id: "user_form") do |f| %>
+
+  <% if @user.errors.any? %> <!-- llm idea to display errors -->
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div id="password_error" style="display: none; color: red;">Passwords do not match!</div>
+
+  <div class="field" style="margin-bottom:15px;">
+    <%= f.label :username %> </br>
+    <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
+  </div> 
+
+  <div class="field" style="margin-bottom:15px;">
+    <%= f.label :password %> </br>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %>
+    <%= f.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <div class="field" style="margin-bottom:15px;">
+    <%= f.label :password_confirmation %> </br>
+    <input type="text" id="dummy_input" name="dummy_input" />
+  </div>
+
+
+  <div style="margin-bottom:15px;">
+    <%= f.label :name, style: "display: block;" %>
+    <%= f.text_field :name ,autocomplete: "name" %>
+  </div>
+
+  <div style="margin-bottom:15px;">
+    <%= f.label :email, style: "display: block" %>
+    <%= f.text_field :email,autocomplete: "email" %>
+  </div>
+
+  <div style="margin-bottom:15px;">
+    <%= f.label :address, style: "display: block" %>
+    <%= f.text_field :address ,autocomplete: "new-address"%>
+  </div>
+
+  <div style="margin-bottom:15px;">
+    <%= f.label :credit_card_number, style: "display: block" %>
+    <%= f.text_field :credit_card_number,autocomplete: "new-credit-card" %>
+  </div>
+
+  <div style="margin-bottom:15px;">
+    <%= f.label :phone_number, style: "display: block" %>
+    <%= f.text_field :phone_number,autocomplete: "new-phone-number" %>
+  </div>
+    </br>
+  <div class="actions">
+    <%= f.submit "Create New User"  %>
+  </div>
+  </br>
+<% end %>
+
+<script> // llm idea and helped generate the script
+  document.getElementById("user_form").addEventListener("submit", function(event) {
+    var password = document.getElementById("user_password").value;
+    var passwordConfirmation = document.getElementById("dummy_input").value;
+    if (password !== passwordConfirmation) {
+      event.preventDefault();
+      document.getElementById("password_error").style.display = "block";
+    } else {
+      document.getElementById("dummy_input").remove();
+    }
+  });
+</script>
+
+<% if !current_user.nil? %>
+  <div>
+    <%= link_to "Back to users", users_path %>
+  </div>
+<% else %>
+  <div>
+    <%= link_to "Back to Main Page", root_path %>
+  </div>
+<% end %>

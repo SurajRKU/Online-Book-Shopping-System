@@ -1,0 +1,28 @@
+<h1>Manage Users</h1>
+<%= link_to "Back", root_path, class: "btn btn-link", style: 'margin: 10px;' %>
+<!-- New User -->
+<%= button_to 'Create New User', new_user_path, method: :get, class: 'btn btn-success', style: 'margin-top: 10px; height:30px' %>
+<hr style="border-top: 3px solid black; margin: 20px 0;">
+<div id="users">
+  <% @users.each do |user| %>
+    <div style="margin-bottom: 20px;">
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <p><strong>Name:</strong> <%= user.name %></p>
+      <%= link_to "Show this user", user_path(user), class: 'btn btn-info' %>
+      <%= link_to "Edit", edit_user_path(user), class: 'btn btn-primary' %>
+
+      <% if user.admin? %>
+        <p>This is an admin account and can't be deleted.</p>
+      <% else %>
+        <%= link_to "Delete", user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+
+      <hr style="border-top: 3px solid black; margin: 20px 0;">
+    </div>
+  <% end %>
+  <!-- Add thick, dark separator -->
+
+</div>
+
+
+

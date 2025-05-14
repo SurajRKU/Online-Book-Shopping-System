@@ -1,0 +1,81 @@
+<h1 style="text-align: center;">Welcome to Online Book Shopping System</h1>
+
+<div style="text-align: center; margin-top: 20px;">
+  <% if user_signed_in? %>
+    <p>Hello, <%= current_user.username %>!</p>
+
+    <!-- User Profile Buttons -->
+    <%= button_to 'Edit Profile', edit_user_path(current_user), method: :get, class: 'btn btn-primary', style: 'margin: 15px; width: 180px' %>
+    <%# button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger", style: 'margin: 15px;' %>
+
+    <!-- Book Actions -->
+    <%= button_to 'Display Books', books_path, method: :get, class: 'btn btn-info', style: 'margin: 15px; width: 180px' %>
+    <%= button_to 'Filter Books by Rating', filter_by_rating_books_path, method: :get, class: 'btn btn-primary', style: 'margin: 15px; width: 180px' %>
+    <%= button_to 'Filter Books by Author', filter_by_author_books_path, method: :get, class: 'btn btn-primary', style: 'margin: 15px;width: 180px' %>
+
+    <!-- Cart & Purchase History -->
+    <%= button_to 'View Cart & Buy Books', cart_path, method: :get, class: 'btn btn-primary', style: 'margin: 15px;width: 180px' %>
+    <%= button_to 'View Purchase History', purchase_history_cart_path, method: :get, class: 'btn btn-primary', style: 'margin: 15px;width: 180px' %>
+    <% unless current_user.admin? %>
+      <%= button_to 'Create and Edit My Reviews', reviews_path, method: :get, class: 'btn btn-secondary', style: 'margin: 15px;width: 180px' %>
+    <% end %>
+
+
+    <!-- Review Actions -->
+    <div style="display: block; justify-content: center; align-items: center; margin-bottom: 20px;">
+    <%= form_with url: by_book_reviews_path, method: :get, local: true do |form| %>
+      <div style="display: inline-block; margin-right: 5px;">
+        <%= label_tag :book_name, "Book name" %>
+        <%= text_field_tag :book_name, nil, placeholder: "Enter Book Name" %>
+
+      <%= form.submit 'List Reviews by Book', class: 'btn btn-secondary', style: 'margin: 15px;' %>
+        </div>
+      <% end %>
+    <!-- Form to List Reviews by Specific User -->
+    <%= form_with url: by_user_reviews_path, method: :get, local: true do |form| %>
+      <div style="display: inline-block; margin-right: 5px;">
+        <%= label_tag :user_id, "Enter Username" %>
+        <%= text_field_tag :user_id, nil, placeholder: "Enter Username" %>
+      </div>
+      <%= form.submit 'List Reviews by User', class: 'btn btn-secondary', style: 'margin: 15px;' %>
+
+      <% end %>
+    <!-- Form to List Reviews by Specific Book -->
+
+    </div>
+    
+    
+    <!-- Admin-specific actions -->
+    <% if current_user.admin? %>
+      <!-- Book Management -->
+      <%= button_to 'New Book', new_book_path, method: :get, class: 'btn btn-success', style: 'margin: 15px; width: 180px' %>
+
+      <!-- User Management -->
+      <%= button_to 'Manage Users', users_path, method: :get, class: 'btn btn-warning', style: 'margin: 15px; width: 180px' %>
+
+      <!-- Review Management -->
+      <%= button_to 'Manage Reviews', admin_reviews_path, method: :get, class: 'btn btn-info', style: 'margin: 15px; width: 180px' %>
+      <%= button_to 'Create Reviews', new_admin_review_path, method: :get, class: 'btn btn-info', style: 'margin: 15px; width: 180px' %>
+
+<% end %>
+
+    <!-- List of available books -->
+    <% if params[:action] == 'index' && controller_name == 'books' && @books.present? %>
+      <h2>Available Books</h2>
+      <% @books.each do |book| %>
+        <p><%= book.name %> | Stock: <%= book.stock %></p>
+      <% end %>
+    <% elsif params[:action] == 'index' && controller_name == 'books' %>
+      <p>Currently no books available on the website to purchase.</p>
+    <% end %>
+        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "btn btn-danger", style: 'margin: 15px; width: 120px' %>
+  <% else %>
+    <!-- Authentication Buttons -->
+    <%= button_to 'Login', new_user_session_path, method: :get, class: 'btn btn-success', style: 'margin: 15px; width: 100px' %>
+    <%= button_to 'Sign Up', new_user_path, method: :get, class: 'btn btn-info', style: 'margin: 15px; width: 100px' %>
+  <% end %>
+
+
+</div>
+
+<%#<p style="text-align: center; margin-top: 30px;">Find me in app/views/home/index.html.erb</p>%>

@@ -1,0 +1,22 @@
+<h2>Filter Books by Average Ratings given by Users</h2>
+<%= form_with url: filter_by_rating_books_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :rating, "Minimum Average Rating" %>
+    <%= form.number_field :rating, step: 0.1, min: 1, max: 5 %>
+  </div>
+  <div>
+    <%= form.submit "Filter Books" %>
+  </div>
+<% end %>
+
+<h3>Books with an Average Rating of <%= params[:rating] %> or Higher</h3>
+<% if @books.present? %>
+  <ul>
+    <% @books.each do |book| %>
+      <li><%= book.name %> (Average Rating: <%= book.reviews.average(:rating).round(2) %>)</li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No books found with the specified rating.</p>
+<% end %>
+<%= link_to "Back", root_path, class: "btn btn-link" %>

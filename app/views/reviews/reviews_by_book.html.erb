@@ -1,0 +1,20 @@
+
+<!-- Form to List Reviews by Specific Book -->
+
+
+<% if @reviews.any? %>
+  <h2>Reviews for <%= @book.name %></h2>
+    <% @reviews.each do |reviews| %>
+    <div class="reviews-item">
+
+    <p>Reviewer: <%= User.find(reviews.user_id).name%></p>
+    <p>Rating: <%= reviews.rating %></p>
+    <p>Comment: <%= reviews.review %></p>
+    <hr style="border-top: 3px solid black; margin: 20px 0;">
+    </div>
+    <% end %>
+  <% else %>
+    <p>This book has not received any reviews so far.</p>
+  <% end %>
+<%= link_to "Back", root_path, class: "btn btn-link" %>
+

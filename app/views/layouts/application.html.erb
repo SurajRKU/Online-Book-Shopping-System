@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Online Book Shopping System" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+  </head>
+
+  <body>
+  <!-- Navigation links for user authentication -->
+
+  <% flash.each do |key, message| %>
+    <div class="alert alert-<%= key %> flash-message" style="text-align: center; margin-top: 20px;">
+      <%= message %>
+    </div>
+  <% end %>
+
+  <%= yield %>
+
+  <script>
+      // Auto-hide flash messages after 3 seconds
+      setTimeout(() => {
+          const flashMessages = document.querySelectorAll('.flash-message');
+          flashMessages.forEach(message => message.style.display = 'none');
+      }, 3000);
+  </script>
+  </body>
+</html>

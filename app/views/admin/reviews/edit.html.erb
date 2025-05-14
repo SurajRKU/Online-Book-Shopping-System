@@ -1,0 +1,25 @@
+<h1>Edit Review</h1>
+
+<%= form_with model: @review, url: admin_review_path(@review), method: :patch do |form| %>
+  <div class="form-group">
+    <%= form.label :book_id %></br>
+    <%= form.text_field :book_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :user_id %></br>
+    <%= form.text_field :user_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :rating %></br>
+    <%= form.number_field :rating, class: "form-control", min: 1, max: 5 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :review %></br>
+    <%= form.text_area :review, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Update Review", class: "btn btn-primary" %>
+<% end %>

@@ -1,0 +1,13 @@
+
+<h1>Your Purchase History</h1>
+
+<% if @transactions.any? %>
+  <% @transactions.each do |transaction| %>
+    <p>Book Name: <%= transaction.book.name %>, Quantity: <%= transaction.quantity %>, Total Price: <%= number_to_currency(transaction.total_price) %></p>
+    <hr style="border-top: 3px solid #ccc; margin: 20px 0;">
+  <% end %>
+<% else %>
+  <p>You have not made any purchases yet.</p>
+<% end %>
+<%#<p>Find me in app/views/cart/purchase_history.html.erb</p>%>
+<%= link_to "Back", root_path, class: "btn btn-link" %>

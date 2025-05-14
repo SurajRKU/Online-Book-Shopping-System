@@ -1,0 +1,28 @@
+<h1>Available Books</h1>
+
+<% if @books.any? %>
+  <% @books.each do |book| %>
+    <div class="book-item" style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+      <p>
+        <strong><%= book.name %></strong> - Price: <%= number_to_currency(book.price) %> | Stock: <%= book.stock %> | Current Quantity in Cart: <%= @cart_items[book.id.to_s] || 0 %>
+      </p>
+      <div style="display: flex; align-items: center;">
+        <!-- Add Button -->
+        <%= button_to '+', add_to_cart_book_path(book), method: :post, class: 'btn btn-success', style: 'margin-right: 5px;' %>
+
+        <!-- Remove Button -->
+        <%= button_to '-', remove_from_cart_book_path(book), method: :post, class: 'btn btn-danger' %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Proceed to Checkout Button -->
+  <div class="checkout" style="text-align: center; margin-top: 20px;">
+    <%= button_to 'Proceed to Buy', checkout_cart_path, method: :get, class: 'btn btn-primary', style: 'width: 200px;' %>
+  </div>
+<% else %>
+  <p>No books available.</p>
+<% end %>
+
+<p></p>
+<%= link_to "Back", root_path, class: "btn btn-link" %>

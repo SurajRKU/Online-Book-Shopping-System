@@ -1,0 +1,27 @@
+<h1>Create Review</h1>
+
+<%= form_with model: @review, url: admin_reviews_path, method: :post do |form| %>
+  <div class="form-group">
+    <%= form.label :book_name %></br>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :username %></br>
+    <%= form.text_field :username, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :rating %></br>
+    <%= form.number_field :rating, class: "form-control", min: 1, max: 5 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :review %></br>
+    <%= form.text_area :review, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Create Review", class: "btn btn-success", style:"margin-top:15px; height:25px; width:150px" %>
+<% end %>
+<p></p>
+<%= link_to "Back", root_path, class: "btn btn-link" %>
